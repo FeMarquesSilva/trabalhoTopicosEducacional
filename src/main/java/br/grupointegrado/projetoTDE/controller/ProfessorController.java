@@ -38,4 +38,34 @@ public class ProfessorController {
         return professorRepository.save(professor);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Professor> update(@PathVariable Integer id, @RequestBody Professor professorDetails) {
+        Optional<Professor> optionalProfessor = professorRepository.findById(id);
+
+        if (optionalProfessor.isPresent()) {
+            Professor professor = optionalProfessor.get();
+            professor.setNome(professorDetails.getNome());
+            professor.setEmail(professorDetails.getEmail());
+            professor.setTelefone(professorDetails.getTelefone());
+            professor.setEspecialidade(professorDetails.getEspecialidade());
+
+            professorRepository.save(professor);
+            return ResponseEntity.ok(professor);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Optional<Professor> optionalProfessor = professorRepository.findById(id);
+
+        if (optionalProfessor.isPresent()) {
+            professorRepository.delete(optionalProfessor.get());
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }
