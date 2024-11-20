@@ -1,6 +1,5 @@
 package br.grupointegrado.projetoTDE.controller;
 
-import br.grupointegrado.projetoTDE.model.Aluno;
 import br.grupointegrado.projetoTDE.model.Professor;
 import br.grupointegrado.projetoTDE.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,13 @@ public class ProfessorController {
     @Autowired
     private ProfessorRepository professorRepository;
 
+    //Função para listar os professores;
     @GetMapping
     public List<Professor> findAll() {
         return professorRepository.findAll();
     }
 
+    //Função para buscar um professor pelo id;
     @GetMapping("/{id}")
     public ResponseEntity<Professor> findById(@PathVariable Integer id) {
         Optional<Professor> professor = professorRepository.findById(id);
@@ -33,11 +34,13 @@ public class ProfessorController {
         }
     }
 
+    //Função para cadastrar um professor;
     @PostMapping
     public Professor save(@RequestBody Professor professor) {
         return professorRepository.save(professor);
     }
 
+    //Função para atualizar um professor pelo id;
     @PutMapping("/{id}")
     public ResponseEntity<Professor> update(@PathVariable Integer id, @RequestBody Professor professorDetails) {
         Optional<Professor> optionalProfessor = professorRepository.findById(id);
@@ -56,6 +59,7 @@ public class ProfessorController {
         }
     }
 
+    //Função para excluir um professor pelo id;
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Optional<Professor> optionalProfessor = professorRepository.findById(id);

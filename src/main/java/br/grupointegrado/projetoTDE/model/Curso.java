@@ -17,9 +17,6 @@ public class Curso {
     private String codigo;
 
     @Column
-    private String telefone;
-
-    @Column
     private Integer carga_horaria;
 
     public Integer getId() {
@@ -44,14 +41,6 @@ public class Curso {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
     }
 
     public Integer getCarga_horaria() {
