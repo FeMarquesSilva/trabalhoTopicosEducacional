@@ -1,9 +1,7 @@
 package br.grupointegrado.projetoTDE.controller;
 
 import br.grupointegrado.projetoTDE.model.Curso;
-import br.grupointegrado.projetoTDE.model.Professor;
 import br.grupointegrado.projetoTDE.repository.CursoRepository;
-import org.apache.catalina.startup.ContextRuleSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +35,7 @@ public class CursoController {
 
     //Cadastrar novo curso;
     @PostMapping
-    public ResponseEntity<Curso> save(@RequestBody String nome, String codigo, String telefone, Integer carga_horaria) {
+    public ResponseEntity<Curso> save(@RequestBody String nome, String codigo, Integer carga_horaria) {
         Curso curso = new Curso();
         curso.setNome(nome);
         curso.setCodigo(codigo);
