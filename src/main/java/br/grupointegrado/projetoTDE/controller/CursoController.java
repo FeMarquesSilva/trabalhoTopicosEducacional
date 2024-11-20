@@ -1,6 +1,7 @@
 package br.grupointegrado.projetoTDE.controller;
 
 import br.grupointegrado.projetoTDE.model.Curso;
+import br.grupointegrado.projetoTDE.model.Turma;
 import br.grupointegrado.projetoTDE.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,15 +36,10 @@ public class CursoController {
 
     //Cadastrar novo curso;
     @PostMapping
-    public ResponseEntity<Curso> save(@RequestBody String nome, String codigo, Integer carga_horaria) {
-        Curso curso = new Curso();
-        curso.setNome(nome);
-        curso.setCodigo(codigo);
-        curso.setCarga_horaria(carga_horaria);
-        this.cursoRepository.save(curso);
-
-        return ResponseEntity.ok(curso);
+    public Curso save(@RequestBody Curso curso) {
+        return cursoRepository.save(curso);
     }
+
 
     //Função para atualizar um curso pelo id;
     @PutMapping("/{id}")
