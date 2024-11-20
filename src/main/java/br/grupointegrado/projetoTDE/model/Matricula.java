@@ -11,10 +11,10 @@ public class Matricula {
     private Integer id;
 
     @Column(name = "aluno_id")
-    private Integer alunoId;
+    private Aluno alunoId;
 
     @Column(name = "turma_id")
-    private Integer turmaId;
+    private Turma turmaId;
 
     public Integer getId() {
         return id;
@@ -24,19 +24,19 @@ public class Matricula {
         this.id = id;
     }
 
-    public Integer getAlunoId() {
+    public Aluno getAlunoId() {
         return alunoId;
     }
 
-    public void setAlunoId(Integer alunoId) {
+    public void setAlunoId(Aluno alunoId) {
         this.alunoId = alunoId;
     }
 
-    public Integer getTurmaId() {
+    public Turma getTurmaId() {
         return turmaId;
     }
 
-    public void setTurmaId(Integer turmaId) {
+    public void setTurmaId(Turma turmaId) {
         this.turmaId = turmaId;
     }
 }
