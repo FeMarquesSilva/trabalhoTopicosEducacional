@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Entity
-@Table(name = "disciplinas")
+@RestController
+@RequestMapping("/api/disciplinas")
 public class DisciplinaController {
 
     @Autowired
