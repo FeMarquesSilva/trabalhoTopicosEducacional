@@ -1,11 +1,7 @@
 package br.grupointegrado.projetoTDE.controller;
 
-import br.grupointegrado.projetoTDE.model.Curso;
 import br.grupointegrado.projetoTDE.model.Disciplina;
-import br.grupointegrado.projetoTDE.model.Professor;
 import br.grupointegrado.projetoTDE.repository.DisciplinaRepository;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +17,13 @@ public class DisciplinaController {
     @Autowired
     private DisciplinaRepository disciplinaRepository;
 
-    //Listar Disciplinas;
+    // Função para listar todas as disciplinas
     @GetMapping
-    public ResponseEntity<List<Disciplina>> findAll() {
-        return ResponseEntity.ok(this.disciplinaRepository.findAll());
+    public List<Disciplina> findAll() {
+        return disciplinaRepository.findAll();
     }
 
-    //Função para buscar uma disciplina pelo id;
+    // Função para buscar uma disciplina pelo id
     @GetMapping("/{id}")
     public ResponseEntity<Disciplina> findById(@PathVariable Integer id) {
         Optional<Disciplina> disciplina = disciplinaRepository.findById(id);
@@ -38,13 +34,13 @@ public class DisciplinaController {
         }
     }
 
-    //Cadastrar nova disciplina;
+    // Função para cadastrar uma nova disciplina
     @PostMapping
     public Disciplina save(@RequestBody Disciplina disciplina) {
         return disciplinaRepository.save(disciplina);
     }
 
-    //Função para atualizar uma disciplina pelo id;
+    // Função para atualizar uma disciplina existente pelo id;
     @PutMapping("/{id}")
     public ResponseEntity<Disciplina> update(@PathVariable Integer id, @RequestBody Disciplina disciplinaDetails) {
         Optional<Disciplina> optionalDisciplina = disciplinaRepository.findById(id);
@@ -53,8 +49,6 @@ public class DisciplinaController {
             Disciplina disciplina = optionalDisciplina.get();
             disciplina.setNome(disciplinaDetails.getNome());
             disciplina.setCodigo(disciplinaDetails.getCodigo());
-            disciplina.setCurso(disciplinaDetails.getCurso());
-            disciplina.setProfessor(disciplinaDetails.getProfessor());
 
             disciplinaRepository.save(disciplina);
             return ResponseEntity.ok(disciplina);
@@ -63,7 +57,7 @@ public class DisciplinaController {
         }
     }
 
-    //Função para deletar um curso pelo id;
+    // Função para deletar uma disciplina pelo id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Optional<Disciplina> optionalDisciplina = disciplinaRepository.findById(id);
@@ -75,6 +69,4 @@ public class DisciplinaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
-
 }

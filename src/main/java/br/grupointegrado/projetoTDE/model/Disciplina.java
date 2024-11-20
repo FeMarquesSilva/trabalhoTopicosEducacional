@@ -11,7 +11,7 @@ public class Disciplina {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "cursos_id", referencedColumnName = "id")
+    @JoinColumn(name = "curso_id", referencedColumnName = "id")
     private Curso curso;
 
     @ManyToOne
