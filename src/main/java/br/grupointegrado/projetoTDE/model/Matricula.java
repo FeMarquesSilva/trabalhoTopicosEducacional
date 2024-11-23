@@ -16,6 +16,8 @@ public class Matricula {
     @Column(name = "turma_id")
     private Integer turmaId;
 
+    
+
     public Integer getId() {
         return id;
     }

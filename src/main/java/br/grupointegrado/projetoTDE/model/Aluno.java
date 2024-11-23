@@ -3,6 +3,7 @@ package br.grupointegrado.projetoTDE.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "alunos")
@@ -20,6 +21,10 @@ public class Aluno {
 
     @Column
     private String matricula;
+
+    @OneToMany
+    @JoinColumn(name = "aluno_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private List<Matricula> matriculas;
 
     @Column
     private LocalDate dataNascimento;
@@ -54,6 +59,14 @@ public class Aluno {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
     }
 
     public LocalDate getDataNascimento() {

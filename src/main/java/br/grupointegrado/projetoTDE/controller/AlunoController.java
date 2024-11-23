@@ -2,14 +2,14 @@ package br.grupointegrado.projetoTDE.controller;
 
 
 import br.grupointegrado.projetoTDE.model.Aluno;
+import br.grupointegrado.projetoTDE.model.Matricula;
 import br.grupointegrado.projetoTDE.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/alunos")
@@ -68,6 +68,36 @@ public class AlunoController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    // Método para buscar notas de um aluno pelo ID
+    @GetMapping("/{id}/relatorio")
+    public ResponseEntity<Map<String, Object>> findNotasById(@PathVariable Integer id) {
+        Optional<Aluno> aluno = alunoRepository.findById(id);
+
+        if (aluno.isPresent()) {
+            // Cria um mapa para armazenar o nome do aluno e os IDs das matrículas
+            Map<String, Object> response = new HashMap<>();
+
+            // Adiciona o nome do aluno ao mapa
+            response.put("nome", aluno.get().getNome());
+
+            // Inicializa a lista para armazenar os IDs das matrículas
+            List<Integer> matriculasIds = new ArrayList<>();
+
+            // Preenche a lista com os IDs das matrículas
+            for (Matricula matricula : aluno.get().getMatriculas()) {
+                matriculasIds.add(matricula.getId());
+            }
+
+            // Adiciona a lista de IDs das matrículas ao mapa
+            response.put("matriculas", matriculasIds);
+
+            // Retorna o nome do aluno e os IDs das matrículas
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
