@@ -2,6 +2,8 @@ package br.grupointegrado.projetoTDE.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "turmas")
 public class Turma {
@@ -19,6 +21,10 @@ public class Turma {
     @ManyToOne
     @JoinColumn(name = "curso_id", referencedColumnName = "id")
     private Curso curso;
+
+    @OneToMany
+    @JoinColumn(name = "turma_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private List<Matricula> matriculas;
 
     public Integer getId() {
         return id;
@@ -50,5 +56,13 @@ public class Turma {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
     }
 }

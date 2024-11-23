@@ -2,6 +2,8 @@ package br.grupointegrado.projetoTDE.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "matriculas")
 public class Matricula {
@@ -16,7 +18,8 @@ public class Matricula {
     @Column(name = "turma_id")
     private Integer turmaId;
 
-    
+    @OneToMany(mappedBy = "matricula")  // Relacionamento inverso com a tabela Notas
+    private List<Nota> notas;
 
     public Integer getId() {
         return id;
@@ -40,5 +43,13 @@ public class Matricula {
 
     public void setTurmaId(Integer turmaId) {
         this.turmaId = turmaId;
+    }
+
+    public List<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Nota> notas) {
+        this.notas = notas;
     }
 }

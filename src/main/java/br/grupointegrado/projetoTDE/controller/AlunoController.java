@@ -3,7 +3,9 @@ package br.grupointegrado.projetoTDE.controller;
 
 import br.grupointegrado.projetoTDE.model.Aluno;
 import br.grupointegrado.projetoTDE.model.Matricula;
+import br.grupointegrado.projetoTDE.model.Nota;
 import br.grupointegrado.projetoTDE.repository.AlunoRepository;
+import br.grupointegrado.projetoTDE.repository.NotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class AlunoController {
 
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    private NotaRepository notaRepository;
 
     // Método para buscar todos os alunos
     @GetMapping
@@ -77,24 +82,37 @@ public class AlunoController {
         Optional<Aluno> aluno = alunoRepository.findById(id);
 
         if (aluno.isPresent()) {
-            // Cria um mapa para armazenar o nome do aluno e os IDs das matrículas
+            // Cria um mapa para armazenar o nome do aluno, as matrículas e as notas
             Map<String, Object> response = new HashMap<>();
 
             // Adiciona o nome do aluno ao mapa
             response.put("nome", aluno.get().getNome());
 
-            // Inicializa a lista para armazenar os IDs das matrículas
-            List<Integer> matriculasIds = new ArrayList<>();
+            // Inicializa a lista para armazenar as notas
+            List<Map<String, Object>> notasList = new ArrayList<>();
 
-            // Preenche a lista com os IDs das matrículas
+            // Percorre todas as matrículas do aluno
             for (Matricula matricula : aluno.get().getMatriculas()) {
-                matriculasIds.add(matricula.getId());
+                // Para cada matrícula, buscar as notas associadas
+                List<Nota> notas = notaRepository.findByMatriculaId(matricula.getId());
+
+                // Para cada nota associada à matrícula
+                for (Nota nota : notas) {
+                    // Cria um mapa com as informações da nota
+                    Map<String, Object> notaData = new HashMap<>();
+                    notaData.put("disciplina", nota.getDisciplina().getNome());  // Nome da disciplina
+                    notaData.put("nota", nota.getNota());  // Nota obtida
+                    notaData.put("data_lancamento", nota.getData_lancamento());  // Data de lançamento
+
+                    // Adiciona o mapa da nota à lista de notas
+                    notasList.add(notaData);
+                }
             }
 
-            // Adiciona a lista de IDs das matrículas ao mapa
-            response.put("matriculas", matriculasIds);
+            // Adiciona a lista de notas ao mapa de resposta
+            response.put("notas", notasList);
 
-            // Retorna o nome do aluno e os IDs das matrículas
+            // Retorna a resposta com as informações do aluno e suas notas
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
