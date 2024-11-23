@@ -1,5 +1,6 @@
 package br.grupointegrado.projetoTDE.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Matricula {
     @Column(name = "turma_id")
     private Integer turmaId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "matricula")  // Relacionamento inverso com a tabela Notas
     private List<Nota> notas;
 

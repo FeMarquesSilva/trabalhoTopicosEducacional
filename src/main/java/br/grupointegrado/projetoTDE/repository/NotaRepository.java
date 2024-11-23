@@ -9,4 +9,6 @@ import java.util.List;
 public interface NotaRepository extends JpaRepository<Nota, Integer> {
 
     List<Nota> findByMatriculaId(Integer id);
+
+    List<Nota> findByDisciplinaId(Integer id);
 }
